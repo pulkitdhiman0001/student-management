@@ -1,0 +1,45 @@
+{% extends 'skel.html' %}
+
+{% block content %}
+{%- for category, message in get_flashed_messages(with_categories = true) %}
+<span style="width:50px;" >
+    <li class="p-1 mb-1 bg-danger text-white">{{ message }}</li>
+</span>
+{%- endfor %}
+
+
+<div class="d-grid gap-2 col-3 mx-auto" style="margin:auto; margin-top:8%">
+    <form class="col g-3" action={{request.path}} method="post">
+        {{ form.csrf_token}}
+        <div>
+            <label class="form-label">City Name</label>
+            <input type="text" class="form-control" value="{{city_to_update.name}}" name="name" required>
+
+            <label class="form-label">Select Country</label>
+            <div>
+                <label class="form-label">Country</label>
+                {{form.country}}
+            </div>
+
+        </div>
+        <div>
+
+            <label class="form-label">Select State</label>
+            <div>
+                <label class="form-label">State</label>
+                {{form.state}}
+            </div>
+
+        </div>
+
+        <br>
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <button type="submit" class="btn btn-outline-primary">Update City</button>
+        </div>
+
+    </form>
+</div>
+<br>
+<br>
+{% include 'footer.html' %}
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'skel.html' %}
+
+{% block content %}
+{%- for category, message in get_flashed_messages(with_categories = true) %}
+<span style="width:50px;" >
+    <li class="p-1 mb-1 bg-danger text-white">{{ message }}</li>
+</span>
+{%- endfor %}
+
+
+<div class="d-grid gap-2 col-3 mx-auto" style="margin:auto; margin-top:8%">
+    <form class="col g-3" action="/update_class" method="post">
+        <input type="text" value="{{stu_ids}}" name="standard_id" id="standard_id" required hidden>
+        <div>
+            <label class="form-label">Update Class</label>
+            <input type="text" class="form-control"  name="standard" placeholder="Class Name" required>
+
+
+        </div>
+
+
+        <br>
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <button type="submit" class="btn btn-outline-primary">Update</button>
+        </div>
+
+    </form>
+</div>
+<br>
+<br>
+{% include 'footer.html' %}
+{% endblock %}

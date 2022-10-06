@@ -1,0 +1,101 @@
+{%extends "skel.html"%}
+
+{%block content%}
+{%- for category, message in get_flashed_messages(with_categories = true) %}
+<span style="width:50px;">
+<!--    <li class="p-1 mb-1 bg-danger text-white">{{ message }}</li>-->
+    {%if category== 'success'%}
+        <li class="p-1 mb-1 bg-success text-white">{{ message }}</li>
+    {%else%}
+        <li class="p-1 mb-1 bg-danger text-white">{{ message }}</li>
+    {%endif%}
+
+</span>
+{%- endfor %}
+
+<br>
+<br>
+
+<h1 style="text-align:center">Student List</h1>
+<br>
+
+<div class="w-75" style="overflow-y:scroll;height:350px; margin:auto;">
+    <form method="post">
+
+        <table class="table table-hover">
+
+            <thead>
+            <tr>
+                <th>Select</th>
+                <th>Name</th>
+                <th>Country</th>
+                <th>State</th>
+                <th>City</th>
+                <th>Address</th>
+                <th>PinCode</th>
+                <th>Class</th>
+                <th>roll no</th>
+                <th>Email</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for student in students %}
+            <tr>
+                <td>
+
+                    <input class="form-check-input" name="check-box" type="checkbox" value="{{student.id}}">
+
+                </td>
+                <td>{{ student.name }}</td>
+                <td>{{ student.city_id }}</td>
+                <td>{{ student.state_id }}</td>
+                <td>{{ student.country_id }}</td>
+                <td>{{ student.addr }}</td>
+                <td>{{ student.pin }}</td>
+                <td>{{ student.standard }}</td>
+                <td>{{ student.roll_no }}</td>
+                <td>{{ student.email }}</td>
+                <td>
+                    <button type="button" class="btn btn-outline-danger"
+                            onclick="location.href='{{url_for('redirect_to_del_record', student_id = student.id)}}'">
+                        Delete
+                    </button>
+
+                    <button type="button" class="btn btn-outline-success"
+                            onclick="location.href='{{url_for('redirect_to_update_record', student_id = student.id)}}'">
+                        Edit
+                    </button>
+                </td>
+
+            </tr>
+
+            {% endfor %}
+            </tbody>
+        </table>
+    </form>
+    <form method="post" action="/get_checked_boxes">
+        <div>
+            <input type="text" id="stu_ids" name="stu_ids" hidden/>
+            <input type="submit" class="btn btn-outline-danger w-25" id="stu_ids_submit" value="Delete Selected Records"/>
+
+
+        </div>
+    </form>
+    <form method="post" action="/send_class_id">
+        <div>
+            <input type="text" id="class_ids" name="class_ids" hidden/>
+
+            <input type="submit" class="btn btn-outline-danger w-25" id="class_ids_submit" value="Edit Class"/>
+
+        </div>
+    </form>
+</div>
+
+<div class="d-grid gap-2 col-2 mx-auto" style="margin-top: 20px;">
+    <button type="button" class="btn btn-outline-primary" onclick="location.href='{{url_for('add_students')}}'">Add
+        Student
+    </button>
+</div>
+
+{%endblock%}

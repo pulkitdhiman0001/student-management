@@ -1,0 +1,59 @@
+{% extends 'skel.html' %}
+
+{% block content %}
+{%- for category, message in get_flashed_messages(with_categories = true) %}
+<span style="width:50px;" >
+<!--    <li class="p-1 mb-1 bg-danger text-white">{{ message }}</li>-->
+    {%if category== 'success'%}
+        <li class="p-1 mb-1 bg-success text-white">{{ message }}</li>
+    {%else%}
+        <li class="p-1 mb-1 bg-danger text-white">{{ message }}</li>
+    {%endif%}
+
+</span>
+{%- endfor %}
+
+
+<div class="d-grid gap-2 col-3 mx-auto w-25" style="overflow-y:scroll; height:250px">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>City Names</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for city in cities %}
+        <tr>
+            <td>{{ city.name }}</td>
+            <td>
+                <button type="button" class="btn btn-outline-danger"
+                        onclick="location.href='{{url_for('redirect_to_del_city', city_id = city.id)}}'">Delete
+                </button>
+                <button type="button" class="btn btn-outline-success"
+                        onclick="location.href='{{url_for('redirect_to_update_city', city_id = city.id)}}'">Edit
+                </button>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<br>
+<div class="d-grid gap-2 col-3 mx-auto">
+    <form class="col g-3" action="{{url_for('add_city')}}" method="POST">
+
+        <div style="float:left; width:70%">
+
+            <input type="text" class="form-control" placeholder="City Name" name="name" required>
+        </div>
+
+        <div class="d-grid gap-2 col-3 mx-auto" style="float:left; width:20%">
+            <button type="submit" class="btn btn-outline-primary" >Add</button>
+        </div>
+
+    </form>
+    </div>
+<br>
+<br>
+{% include 'footer.html' %}
+{% endblock %}

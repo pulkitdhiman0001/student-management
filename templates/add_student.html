@@ -1,0 +1,91 @@
+{% extends 'skel.html' %}
+
+{% block content %}
+{%- for category, message in get_flashed_messages(with_categories = true) %}
+<span style="width:50px;">
+    {%if category== 'success'%}
+        <li class="p-1 mb-1 bg-success text-white">{{ message }}</li>
+    {%else%}
+        <li class="p-1 mb-1 bg-danger text-white">{{ message }}</li>
+    {%endif%}
+
+</span>
+{%- endfor %}
+<br>
+<div class="d-grid gap-2 col-3 mx-auto">
+    <form class="col g-3" action="{{request.path}}" method="post">
+        {{ form.csrf_token}}
+        <div>
+            <label class="form-label">Name</label>
+
+            <input type="text" class="form-control" name="name" required>
+
+        </div>
+
+        <div>
+            <label class="form-label">Address</label>
+            <input type="text" class="form-control" name="addr" required>
+        </div>
+
+        <div>
+            <label class="form-label">Country</label>
+            <!--            <select name="country_id" style="background-color:DodgerBlue;color:white;border-radius:10px" class="w-100">-->
+            <!--                <option value="">&#45;&#45; Select Country &#45;&#45;</option>-->
+            <!--                {% for country in countries %}-->
+            <!--                <option>{{form.country}}</option>-->
+            <!--                {%endfor%}-->
+            <!--            </select>-->
+            {{form.country(class="form-select form-select-lg mb-3 bg-info text-light")}}
+
+        </div>
+
+
+        <div>
+            <label class="form-label">State</label>
+            <!--            <select name="state_id" style="background-color:DodgerBlue;color:white;border-radius:10px" class="w-100">-->
+            <!--                <option value="">&#45;&#45; Select State &#45;&#45;</option>-->
+            <!--                {% for state in states %}-->
+            <!--                <option>{{form.state}}</option>-->
+            <!--                {%endfor%}-->
+            <!--            </select>-->
+            {{form.state(class="form-select form-select-lg mb-3 bg-info text-light")}}
+        </div>
+
+        <div>
+            <label class="form-label">City</label>
+            <!--            <select name="city_id" style="background-color:DodgerBlue;color:white;border-radius:10px" class="w-100">-->
+            <!--                <option value="">&#45;&#45; Select city &#45;&#45;</option>-->
+            <!--                {% for city in cities %}-->
+            <!--                <option>{{form.city}}</option>-->
+            <!--                {%endfor%}-->
+            <!--            </select>-->
+            {{form.city(class="form-select form-select-lg mb-3 bg-info text-light")}}
+        </div>
+
+        <div>
+            <label class="form-label">Zip</label>
+            <input type="text" class="form-control" name="pin" required>
+        </div>
+        <div>
+            <label class="form-label">Class</label>
+            <input type="text" class="form-control" name="standard" required>
+        </div>
+        <div>
+            <label class="form-label">Roll No</label>
+            <input type="text" class="form-control" name="roll_no" required>
+        </div>
+        <div>
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" name="email" required>
+        </div>
+        <br>
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <button type="submit" class="btn btn-outline-primary">Add Record</button>
+        </div>
+    </form>
+</div>
+
+<br>
+<br>
+{% include 'footer.html' %}
+{% endblock %}
