@@ -171,13 +171,6 @@ def redirect_to_update_record(student_id):
             flash("User with same Email or Roll No. already exists", category='error')
 
             return render_template('update_student.html', user_to_update=user_to_update, form=form)
-        # exists = Student.query.filter(
-        #     Student.id == user_to_update.id or Student.email == user_to_update.email or Student.roll_no == user_to_update.roll_no).all()
-
-        # exists = db.session.query(db.exists().where(Student.id != user_to_update.id and (
-        #         Student.email == user_to_update.email or Student.roll_no == user_to_update.roll_no))).scalar()
-        # if exists:
-        #     flash("User with same Email or Roll No. already exists", category='error')
 
         if message:
             return render_template('update_student.html', user_to_update=user_to_update, form=form)
