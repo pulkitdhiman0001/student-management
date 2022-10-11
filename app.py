@@ -1,7 +1,10 @@
 import re
+
 from flask import render_template, request, url_for, flash, redirect, jsonify
-from models import State, Student, City, Country, app, db
+from sqlalchemy import desc
+
 from forms import Form
+from models import State, Student, City, Country, app, db
 
 
 @app.route('/get_state_list/<country_id>')
@@ -33,13 +36,16 @@ def get_city_list(state_id):
 # Index
 @app.route('/')
 def index():
-    return render_template('show_student_list.html',students=Student.query.all())
+    students = Student.query.order_by(desc(Student.id))
+    return render_template('show_student_list.html', students=students)
 
 
 # Show all students records
 @app.route('/show_all_students')
 def show_all_students():
-    return render_template('show_student_list.html', students=Student.query.all())
+    students = Student.query.order_by(desc(Student.id))
+
+    return render_template('show_student_list.html', students=students)
 
 
 # add student
@@ -78,10 +84,19 @@ def add_students():
         if message:
             return redirect(url_for('add_students'))
         else:
-            student = Student(request.form['name'], request.form['addr'], country.name,
-                              state.name, city.name, request.form['pin'], request.form["standard"],
-                              request.form['roll_no'],
-                              request.form['email'])
+            student = Student(name=request.form['name'], addr=request.form['addr'], country_id=country.id,
+                              state_id=state.id, city_id=city.id, pin=request.form['pin'],
+                              standard=request.form["standard"],
+                              roll_no=request.form['roll_no'],
+                              email=request.form['email'])
+
+        exists = db.session.query(db.exists().where(
+            Student.email == request.form["email"] or Student.roll_no == request.form["roll_no"])).scalar()
+        if exists:
+
+            flash("User with same Email or Roll No. already exists", category='error')
+            return render_template('add_student.html', form=form)
+        else:
             db.session.add(student)
             db.session.commit()
             flash("Record added!", category='success')
@@ -142,6 +157,28 @@ def redirect_to_update_record(student_id):
         else:
             message = "Enter a Valid Email"
             flash(message, category='error')
+
+        students = Student.query.all()
+        for stu in students:
+            print(stu.country_id, stu.city_id, stu.state_id)
+
+        search_res = Student.query.filter(
+            Student.email == user_to_update.email or Student.roll_no == user_to_update.roll_no)
+        for res in search_res:
+            print(res.id, res.name, res.roll_no, res.email)
+            if res.id == user_to_update.id:
+                continue
+            flash("User with same Email or Roll No. already exists", category='error')
+
+            return render_template('update_student.html', user_to_update=user_to_update, form=form)
+        # exists = Student.query.filter(
+        #     Student.id == user_to_update.id or Student.email == user_to_update.email or Student.roll_no == user_to_update.roll_no).all()
+
+        # exists = db.session.query(db.exists().where(Student.id != user_to_update.id and (
+        #         Student.email == user_to_update.email or Student.roll_no == user_to_update.roll_no))).scalar()
+        # if exists:
+        #     flash("User with same Email or Roll No. already exists", category='error')
+
         if message:
             return render_template('update_student.html', user_to_update=user_to_update, form=form)
         else:
@@ -403,7 +440,7 @@ def update_class():
             student_class_to_update = Student.query.filter_by(id=ids).first()
             student_class_to_update.standard = request.form["standard"]
             db.session.commit()
-            flash(f"Deleted {student_class_to_update.name}'s Record", category='success')
+            flash(f"Updated {student_class_to_update.name}'s Record", category='success')
     return redirect('show_all_students')
 
 
