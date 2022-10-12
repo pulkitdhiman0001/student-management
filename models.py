@@ -11,6 +11,20 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db, render_as_batch=True)
 
 
+class Users(db.Model):
+    __talename__ = "users"
+
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(100))
+    password = db.Column(db.String(100))
+    confirm_password = db.Column(db.String(100))
+
+    def __init__(self, username, password, confirm_password):
+        self.username = username
+        self.password = password
+        self.confirm_password = confirm_password
+
+
 class Student(db.Model):
     __tablename__ = "student"
 

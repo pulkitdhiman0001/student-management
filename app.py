@@ -1,10 +1,10 @@
 import re
 
-from flask import render_template, request, url_for, flash, redirect, jsonify
+from flask import render_template, request, url_for, flash, redirect, jsonify, session
 from sqlalchemy import desc
 
 from forms import Form
-from models import State, Student, City, Country, app, db
+from models import State, Student, City, Country, app, db, Users
 
 
 @app.route('/get_state_list/<country_id>')
@@ -33,8 +33,47 @@ def get_city_list(state_id):
     return jsonify({'city_list': city_list})
 
 
+@app.route('/', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form["username"]
+        password = request.form["password"]
+
+        if username == 'admin' and password == 'admin':
+            session['username'] = username
+            flash(f'Logged in as {username}', category='success')
+            return redirect(url_for('index'))
+        else:
+            flash('Username or Password does not match', category='error')
+            return render_template('login.html')
+
+    return render_template('login.html')
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        add_user = Users(username=request.form["username"], password=request.form["password"],
+                         confirm_password=request.form["confirm_password"])
+
+        exists = db.session.query(db.exists().where(
+            Users.username == request.form["username"])).scalar()
+        if exists:
+            flash("User with same username already exists", category='error')
+            return render_template('register.html')
+        if request.form["username"] != request.form["confirm_password"]:
+            flash("Password does not match", category='error')
+            return render_template('register.html')
+        else:
+            db.session.add(add_user)
+            db.session.commit()
+            flash('User Created', category='success')
+            return redirect(url_for('login'))
+    return render_template('register.html')
+
+
 # Index
-@app.route('/')
+@app.route('/index')
 def index():
     students = Student.query.order_by(desc(Student.id))
     return render_template('show_student_list.html', students=students)
