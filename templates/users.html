@@ -1,0 +1,56 @@
+{%extends "skel.html"%}
+
+{%block content%}
+{%- for category, message in get_flashed_messages(with_categories = true) %}
+<span style="width:50px;">
+<!--    <li class="p-1 mb-1 bg-danger text-white">{{ message }}</li>-->
+    {%if category== 'success'%}
+        <li class="p-1 mb-1 bg-success text-white">{{ message }}</li>
+    {%else%}
+        <li class="p-1 mb-1 bg-danger text-white">{{ message }}</li>
+    {%endif%}
+
+</span>
+{%- endfor %}
+
+<br>
+<br>
+
+<h2 style="text-align:center">Users List</h2>
+<br>
+
+<div style="width:500px; margin:auto" class="d-grid gap-2 col-6 mx-auto">
+    <div style="overflow-y:scroll; height:200px">
+        <table class="table table-hover" id="tb">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Action</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.username }}</td>
+                <td>
+                    <button type="button" class="btn btn-outline-danger"
+                            onclick="location.href='{{url_for('delete_user', user_id = user.id)}}'">
+                        Delete
+                    </button>
+                    <button type="button" class="btn btn-outline-success"
+                            onclick="location.href='{{url_for('update_user', user_id = user.id)}}'">
+                        Edit
+                    </button>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+
+</div>
+
+{%endblock%}
