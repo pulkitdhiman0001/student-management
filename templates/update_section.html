@@ -9,11 +9,10 @@
 
 
 <div class="d-grid gap-2 col-3 mx-auto" style="margin:auto; margin-top:8%">
-    <form class="col g-3" action="/update_class" method="post">
-        <input type="text" value="{{stu_ids}}" name="standard_id" id="standard_id" required hidden>
+    <form class="col g-3" action={{request.path}} method="post">
         <div>
-            <label class="form-label">Update Class</label>
-            <input type="text" class="form-control"  name="standard" placeholder="Class" required>
+            <label class="form-label">Section Name</label>
+            <input type="text" class="form-control" value="{{section_to_update.section_name}}" name="section_name" required>
 
 
         </div>

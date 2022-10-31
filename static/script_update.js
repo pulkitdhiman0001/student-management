@@ -2,7 +2,7 @@ let country_select = document.getElementById('country');
 let state_select = document.getElementById('state');
 let city_select = document.getElementById('city');
 
-country_select.onchange = function(){
+country_select.onload = function(){
  country = country_select.value;
  console.log(country)
  <!-- alert(country); -->
@@ -10,7 +10,7 @@ country_select.onchange = function(){
 
   response.json().then(function(data) {
   console.log(data)
-   optionHTML = '<option value="">Select State</option>';
+   optionHTML = '';
    for (let state of data.state_list) {
     optionHTML += '<option value="' + state.id +'">' + state.name + '</option>'
    }
@@ -20,11 +20,11 @@ country_select.onchange = function(){
 }
 
 
-state_select.onchange = function(){
+state_select.onload = function(){
  state = state_select.value;
  fetch('/get_city_list/' + state).then(function(response){
   response.json().then(function(data) {
-   optionHTML ='<option value="">Select City</option>';
+   optionHTML ='';
 
    for (city of data.city_list) {
 
@@ -34,6 +34,3 @@ state_select.onchange = function(){
   });
  });
 }
-
-
-

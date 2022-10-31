@@ -1,0 +1,158 @@
+{% extends 'skel.html' %}
+
+{% block content %}
+{%- for category, message in get_flashed_messages(with_categories = true) %}
+<span style="width:50px;">
+<!--    <li class="p-1 mb-1 bg-danger text-white">{{ message }}</li>-->
+    {%if category== 'success'%}
+        <li class="p-1 mb-1 bg-success text-white">{{ message }}</li>
+    {%else%}
+        <li class="p-1 mb-1 bg-danger text-white">{{ message }}</li>
+    {%endif%}
+
+</span>
+{%- endfor %}
+
+<div class="d-grid gap-2 col-5 mx-auto" style="margin-top:40px">
+
+    <form action="{{request.path}}" method="post">
+        <div style="position:fixed; margin-left:700px; top:10rem;">
+
+            <div class="row mb-4">
+                <div class="col">
+                    <button type="button" class="btn btn-outline-success" onclick="hideDisable()" id="edit_button">
+                        Edit
+                    </button>
+                </div>
+                <br>
+                <div class="col">
+                    <input type="submit" value="Update" class="btn btn-outline-info" id="update_button" hidden/>
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-outline-danger"
+                            onclick="location.href='{{url_for('student_details',student_id = user_to_update.id)}}'"
+                            id="discard_button" hidden>
+                        Discard
+                    </button>
+                </div>
+            </div>
+        </div>
+        <fieldset disabled class="form_disabled">
+            {{ form.csrf_token}}
+            <div class="row mb-3">
+                <div class="col-6">
+                    <div class="form-outline">
+                        <label class="form-label">First Name</label>
+                        <input type="text" id="form3Example1" value="{{user_to_update.fname}}" class="form-control"
+                               name="fname" placeholder="First name"/>
+
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-outline">
+                        <label class="form-label">Last Name</label>
+                        <input type="text" id="form3Example2" value="{{user_to_update.lname}}" class="form-control"
+                               name="lname" placeholder="Last Name"/>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <div class="form-outline">
+                        <label class="form-label">Mother Name</label>
+                        <input type="text" class="form-control" name="mother_name"
+                               value="{{user_to_update.mother_name}}"
+                               placeholder="Mother name"/>
+
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-outline">
+                        <label class="form-label">Father Name</label>
+                        <input type="text" class="form-control" name="father_name"
+                               value="{{user_to_update.father_name}}"
+                               placeholder="Father Name"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-3" style="background-color:lightcyan; border-radius:15px">
+                <div class="row mb-3">
+                    <div class="col">
+
+                        <label class="form-label">Street</label>
+                        <input type="text" class="form-control" name="addr" value="{{user_to_update.addr}}"
+                               placeholder="Street" required>
+                    </div>
+                    <div class="col-3">
+                        <label class="form-label">Zip</label>
+                        <input type="text" class="form-control" name="pin" placeholder="Pin"
+                               value="{{user_to_update.pin}}"
+                               required>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <label class="form-label">Country</label>
+
+                    {{form.country(class="form-select form-select-lg mb-3 bg-info text-light")}}
+
+                </div>
+
+
+                <div class="col">
+                    <label class="form-label">State</label>
+
+                    {{form.state(class="form-select form-select-lg mb-3 bg-info text-light")}}
+                </div>
+
+                <div class="col">
+                    <label class="form-label">City</label>
+
+                    {{form.city(class="form-select form-select-lg mb-3 bg-info text-light")}}
+                </div>
+
+            </div>
+            <div class="row mb-3">
+
+                <div class="col">
+                    <label class="form-label">Standard</label>
+
+                    {{form.standard(class="form-select form-select-lg mb-3 bg-info text-light")}}
+                </div>
+                <div class="col">
+                    <label class="form-label">Section</label>
+                    {{form.section(class="form-select form-select-lg mb-3 bg-info text-light")}}
+                </div>
+
+
+            </div>
+            <div class="row mb-4">
+                <div class="col">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" name="email" value="{{user_to_update.email}}"
+                           placeholder="Email">
+                </div>
+                <div class="col">
+                    <label class="form-label">Roll No.</label>
+                    <input type="text" class="form-control" name="roll_no" placeholder="Roll no."
+                           value="{{user_to_update.roll_no}}" required>
+                </div>
+            </div>
+
+
+        </fieldset>
+    </form>
+</div>
+
+<br>
+<br>
+<br>
+
+{% block script %}
+
+<script src="{{url_for('static', filename='script_update.js')}}"></script>
+
+{% endblock %}
+{% include 'footer.html' %}
+{% endblock %}

@@ -1,0 +1,117 @@
+{%extends "skel.html"%}
+{%block title%}Home{% endblock %}
+{%block content%}
+  {%- for category, message in get_flashed_messages(with_categories = true) %}
+<span style="width:50px; margin-bottom:0px">
+<!--    <li class="p-1 mb-1 bg-danger text-white">{{ message }}</li>-->
+    {%if category== 'success'%}
+        <h6 class="p-1 mb-1 bg-success text-white">{{ message }}</h6>
+    {%else%}
+        <h6 class="p-1 mb-1 bg-danger text-white">{{ message }}</h6>
+    {%endif%}
+
+</span>
+{%- endfor %}
+
+<br>
+<br>
+
+<h2 style="text-align:center">Student List</h2>
+<br>
+<div class="w-75" style="margin:auto;">
+    <form method="post">
+        <div class="d-block" style="position:fixed;top:10rem; left:4rem;">
+            <a class="add_button"
+               style="text-decoration:none;color:green;font-size:17px;padding:7px;font-weight:bold"
+               href="{{url_for('add_students')}}">Add <i class="fa fa-plus" aria-hidden="true"></i></a>
+            <br/>
+            <form method="POST" action="/send_class_id">
+                <div>
+                    <input type="text" id="class_ids" name="class_ids" hidden/>
+                    <button type="submit" class="update_button" id="class_ids_submit">
+                        Update <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                    </button>
+
+                </div>
+            </form>
+            <form method="POST" action="/get_checked_boxes">
+                <div>
+                    <input type="text" id="stu_ids" name="stu_ids" hidden/>
+                    <button type="submit" class="del_button" id="stu_ids_submit">
+                        Del <i class="fa fa-minus" aria-hidden="true"></i>
+                    </button>
+
+                </div>
+            </form>
+        </div>
+
+        <div style="height:400px;">
+            <table class="table table-hover" id="tb">
+                <thead style="position:sticky; top:0; background-color:white;">
+                <tr>
+                    <th></th>
+                    <th>Roll No.</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Class</th>
+                    <th>Section</th>
+                    <th>Email</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for student in students %}
+                <tr>
+                    <td>
+                        <input class="form-check-input" name="check-box" type="checkbox" value="{{student.id}}">
+                    </td>
+                    <td style="cursor: pointer;"
+                        onclick="location.href='{{url_for('student_details', student_id = student.id)}}'">{{
+                        student.roll_no }}
+                    </td>
+                    <td style="cursor: pointer;"
+                        onclick="location.href='{{url_for('student_details', student_id = student.id)}}'">{{
+                        student.fname }}
+                    </td>
+                    <td style="cursor: pointer;"
+                        onclick="location.href='{{url_for('student_details', student_id = student.id)}}'">{{
+                        student.lname }}
+                    </td>
+                    <td style="cursor: pointer;"
+                        onclick="location.href='{{url_for('student_details', student_id = student.id)}}'">{{
+                        student.standard.standard_name }}
+                    </td>
+                    <td style="cursor: pointer;"
+                        onclick="location.href='{{url_for('student_details', student_id = student.id)}}'">{{
+                        student.section.section_name }}
+                    </td>
+
+                    <td style="cursor: pointer;"
+                        onclick="location.href='{{url_for('student_details', student_id = student.id)}}'">{{
+                        student.email }}
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-outline-danger"
+                                onclick="location.href='{{url_for('del_student', student_id = student.id)}}'"
+                                data-toggle="modal" data-target=".bd-example-modal-lg">
+                            Delete
+                        </button>
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </form>
+
+
+</div>
+
+
+<br>
+
+
+{%endblock%}
+
