@@ -2,7 +2,7 @@ let country_select = document.getElementById('country');
 let state_select = document.getElementById('state');
 let city_select = document.getElementById('city');
 
-country_select.onload = function(){
+country_select.onchange = function(){
  country = country_select.value;
  console.log(country)
  <!-- alert(country); -->
