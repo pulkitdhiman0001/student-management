@@ -12,7 +12,7 @@ migrate = Migrate(app, db, render_as_batch=True)
 
 
 class Users(db.Model):
-    __talename__ = "users"
+    __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100))
@@ -81,7 +81,7 @@ class State(db.Model):
     country_id = db.Column(db.Integer, db.ForeignKey('country.id'))
     country = db.relationship('Country')
 
-    def __init__(self, name, country_id):
+    def __init__(self, name, country_id=None):
         self.name = name
         self.country_id = country_id
 
@@ -96,7 +96,7 @@ class City(db.Model):
     country_id = db.Column(db.Integer, db.ForeignKey('country.id'))
     country = db.relationship('Country')
 
-    def __init__(self, name, state_id, country_id):
+    def __init__(self, name, state_id=None, country_id=None):
         self.name = name
         self.state_id = state_id
         self.country_id = country_id

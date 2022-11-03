@@ -2,20 +2,25 @@
 
 {% block content %}
 {%- for category, message in get_flashed_messages(with_categories = true) %}
-<span style="width:50px;" >
-    <li class="p-1 mb-1 bg-danger text-white">{{ message }}</li>
-</span>
+<ul>
+    {%if category== 'success'%}
+        <li class="p-1 mb-1 bg-success text-white">{{ message }}</li>
+    {%else%}
+        <li class="p-1 mb-1 bg-danger text-white">{{ message }}</li>
+    {%endif%}
+
+</ul>
 {%- endfor %}
-
-
 <div class="d-grid gap-2 col-3 mx-auto" style="margin:auto; margin-top:8%">
     <form class="col g-3" action="/update_class" method="post">
         <input type="text" value="{{stu_ids}}" name="standard_id" id="standard_id" required hidden>
         <div>
             <label class="form-label">Update Class</label>
-            <input type="text" class="form-control"  name="standard" placeholder="Class" required>
 
-
+            {{form.standard(class="form-select form-select-lg mb-3 bg-info text-light")}}
+            <br>
+            <label class="form-label">Update Section</label>
+            {{form.section(class="form-select form-select-lg mb-3 bg-info text-light")}}
         </div>
 
 

@@ -84,6 +84,35 @@
             outline:none !important;
         }
 
+       .scroll{
+            overflow:hidden;
+            height: 300px;
+       }
+       .scroll:hover{
+            overflow-y: scroll;
+            transition:overflow-y 2s;
+       }
+
+
+ ::-webkit-scrollbar {
+    width: 8px;
+ }
+
+ ::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: cyan;
+}
+
+table tr:hover{
+    background-color:lightcyan;
+}
+
+ul{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
 
     </style>
 </head>
@@ -102,13 +131,13 @@
                 <a href="{{url_for('home')}}" class="nav-link active">Students</a>
             </li>
             <li class="nav-item">
-                <a href="{{url_for('show_all_country')}}" class="nav-link active">Countries</a>
+                <a href="{{url_for('all_countries')}}" class="nav-link active">Countries</a>
             </li>
             <li class="nav-item">
-                <a href="{{url_for('show_all_states')}}" class="nav-link active">States</a>
+                <a href="{{url_for('all_states')}}" class="nav-link active">States</a>
             </li>
             <li class="nav-item">
-                <a href="{{url_for('show_all_cities')}}" class="nav-link active">Cities</a>
+                <a href="{{url_for('all_cities')}}" class="nav-link active">Cities</a>
             </li>
         </ul>
         <div class="dropdown show nav-item" style="margin-right: 80px">

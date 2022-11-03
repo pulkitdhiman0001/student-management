@@ -1,16 +1,15 @@
 {%extends "skel.html"%}
 {%block title%}Home{% endblock %}
 {%block content%}
-  {%- for category, message in get_flashed_messages(with_categories = true) %}
-<span style="width:50px; margin-bottom:0px">
-<!--    <li class="p-1 mb-1 bg-danger text-white">{{ message }}</li>-->
+{%- for category, message in get_flashed_messages(with_categories = true) %}
+<ul>
     {%if category== 'success'%}
-        <h6 class="p-1 mb-1 bg-success text-white">{{ message }}</h6>
+    <li class="p-1 mb-1 bg-success text-white">{{ message }}</li>
     {%else%}
-        <h6 class="p-1 mb-1 bg-danger text-white">{{ message }}</h6>
+    <li class="p-1 mb-1 bg-danger text-white">{{ message }}</li>
     {%endif%}
 
-</span>
+</ul>
 {%- endfor %}
 
 <br>
@@ -18,31 +17,36 @@
 
 <h2 style="text-align:center">Student List</h2>
 <br>
-<div class="w-75" style="margin:auto;">
-    <form method="post">
+<div class="w-75" style="margin:auto;margin-bottom:200px">
+
         <div class="d-block" style="position:fixed;top:10rem; left:4rem;">
-            <a class="add_button"
+            <div>
+                <a class="add_button"
                style="text-decoration:none;color:green;font-size:17px;padding:7px;font-weight:bold"
                href="{{url_for('add_students')}}">Add <i class="fa fa-plus" aria-hidden="true"></i></a>
-            <br/>
-            <form method="POST" action="/send_class_id">
-                <div>
-                    <input type="text" id="class_ids" name="class_ids" hidden/>
-                    <button type="submit" class="update_button" id="class_ids_submit">
-                        Update <i class="fa fa-arrow-up" aria-hidden="true"></i>
-                    </button>
+            </div>
 
-                </div>
-            </form>
-            <form method="POST" action="/get_checked_boxes">
-                <div>
+            <div>
+                <form method="POST" action="/get_checked_boxes">
+
                     <input type="text" id="stu_ids" name="stu_ids" hidden/>
                     <button type="submit" class="del_button" id="stu_ids_submit">
                         Del <i class="fa fa-minus" aria-hidden="true"></i>
                     </button>
 
-                </div>
             </form>
+            </div>
+           <div>
+                <form method="POST" action="/send_class_id">
+
+                    <input type="text" id="class_ids" name="class_ids" hidden/>
+                    <button type="submit" class="update_button" id="class_ids_submit">
+                        Update <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                    </button>
+
+            </form>
+           </div>
+
         </div>
 
         <div style="height:400px;">
@@ -104,13 +108,7 @@
                 </tbody>
             </table>
         </div>
-    </form>
-
-
 </div>
-
-
-<br>
 
 
 {%endblock%}

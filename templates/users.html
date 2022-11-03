@@ -2,15 +2,14 @@
 
 {%block content%}
 {%- for category, message in get_flashed_messages(with_categories = true) %}
-<span style="width:50px;">
-<!--    <li class="p-1 mb-1 bg-danger text-white">{{ message }}</li>-->
+<ul>
     {%if category== 'success'%}
         <li class="p-1 mb-1 bg-success text-white">{{ message }}</li>
     {%else%}
         <li class="p-1 mb-1 bg-danger text-white">{{ message }}</li>
     {%endif%}
 
-</span>
+</ul>
 {%- endfor %}
 
 <br>

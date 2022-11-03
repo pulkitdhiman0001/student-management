@@ -2,15 +2,14 @@
 
 {% block content %}
 {%- for category, message in get_flashed_messages(with_categories = true) %}
-<span style="width:50px;">
-<!--    <li class="p-1 mb-1 bg-danger text-white">{{ message }}</li>-->
+<ul>
     {%if category== 'success'%}
         <li class="p-1 mb-1 bg-success text-white">{{ message }}</li>
     {%else%}
         <li class="p-1 mb-1 bg-danger text-white">{{ message }}</li>
     {%endif%}
 
-</span>
+</ul>
 {%- endfor %}
 
 <div class="d-grid gap-2 col-5 mx-auto" style="margin-top:40px">
@@ -44,7 +43,7 @@
                     <div class="form-outline">
                         <label class="form-label">First Name</label>
                         <input type="text" id="form3Example1" value="{{user_to_update.fname}}" class="form-control"
-                               name="fname" placeholder="First name"/>
+                               name="fname" placeholder="First name" required/>
 
                     </div>
                 </div>
@@ -52,7 +51,7 @@
                     <div class="form-outline">
                         <label class="form-label">Last Name</label>
                         <input type="text" id="form3Example2" value="{{user_to_update.lname}}" class="form-control"
-                               name="lname" placeholder="Last Name"/>
+                               name="lname" placeholder="Last Name" required/>
                     </div>
                 </div>
             </div>
@@ -62,7 +61,7 @@
                         <label class="form-label">Mother Name</label>
                         <input type="text" class="form-control" name="mother_name"
                                value="{{user_to_update.mother_name}}"
-                               placeholder="Mother name"/>
+                               placeholder="Mother name" required/>
 
                     </div>
                 </div>
@@ -71,7 +70,7 @@
                         <label class="form-label">Father Name</label>
                         <input type="text" class="form-control" name="father_name"
                                value="{{user_to_update.father_name}}"
-                               placeholder="Father Name"/>
+                               placeholder="Father Name" required/>
                     </div>
                 </div>
             </div>
@@ -131,7 +130,7 @@
                 <div class="col">
                     <label class="form-label">Email</label>
                     <input type="email" class="form-control" name="email" value="{{user_to_update.email}}"
-                           placeholder="Email">
+                           placeholder="Email" required>
                 </div>
                 <div class="col">
                     <label class="form-label">Roll No.</label>

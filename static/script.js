@@ -15,6 +15,7 @@ country_select.onchange = function(){
     optionHTML += '<option value="' + state.id +'">' + state.name + '</option>'
    }
    state_select.innerHTML = optionHTML;
+   city_select.innerHTML = '<option value="">Select City</option>';
   });
  });
 }
@@ -34,6 +35,9 @@ state_select.onchange = function(){
   });
  });
 }
+
+
+
 
 
 

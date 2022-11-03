@@ -2,15 +2,14 @@
 
 {%block content%}
 {%- for category, message in get_flashed_messages(with_categories = true) %}
-<span style="width:50px;">
-<!--    <li class="p-1 mb-1 bg-danger text-white">{{ message }}</li>-->
+<ul>
     {%if category== 'success'%}
         <li class="p-1 mb-1 bg-success text-white">{{ message }}</li>
     {%else%}
         <li class="p-1 mb-1 bg-danger text-white">{{ message }}</li>
     {%endif%}
 
-</span>
+</ul>
 {%- endfor %}
 
 <br>
@@ -25,7 +24,7 @@
         <table class="table table-hover" id="tb">
             <thead>
             <tr>
-                <th>Name</th>
+                <th>State</th>
                 <th>Country</th>
                 <th>Action</th>
             </tr>
@@ -40,12 +39,13 @@
                 <td>{{state.name }}</td>
                 <td>{{state.country.name}}</td>
 
+
                 <td>
                     <button type="button" class="btn btn-outline-danger"
-                            onclick="location.href='{{url_for('redirect_to_del_state', state_id = state.id)}}'">Delete
+                            onclick="location.href='{{url_for('del_state', state_id = state.id)}}'">Delete
                     </button>
                     <button type="button" class="btn btn-outline-success"
-                            onclick="location.href='{{url_for('redirect_to_update_state', state_id = state.id)}}'">Edit
+                            onclick="location.href='{{url_for('update_state', state_id = state.id)}}'">Edit
                     </button>
                 </td>
 
@@ -58,16 +58,18 @@
         </table>
     </div>
 
-    <div class="d-grid gap-2 col-12 mx-auto" style="margin-top: 20px;">
+    <div class="d-grid gap-2 col-12 mx-auto" style="margin-top: 40px;">
         <div class="d-grid gap-2 col-6 mx-auto">
             <form action="{{url_for('add_state')}}" method="POST">
 
-                <div style="float:left; width:80% !important">
+                <div class="d-grid gap-2 col-12 mx-auto">
 
                     <input type="text" class="form-control" placeholder="State Name" name="name" required>
+                    {{form.country(class="form-select form-select-lg mb-3 bg-info text-light")}}
                 </div>
 
-                <div class="d-grid gap-2 col-5 mx-auto" style="float:left; width:20%; margin-left:20px">
+
+                <div class="d-grid col-8 mx-auto" >
                     <button type="submit" class="btn btn-outline-primary">Add</button>
                 </div>
 
