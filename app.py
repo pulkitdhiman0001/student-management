@@ -149,6 +149,8 @@ def add_students():
         form = Form()
 
         form.country.choices = [(country.id, country.name) for country in Country.query.all()]
+        form.state.choices = [(state.id, state.name) for state in State.query.all()]
+        form.city.choices = [(city.id, city.name) for city in City.query.all()]
         form.standard.choices = [(standard.id, standard.standard_name) for standard in Standard.query.all()]
         form.section.choices = [(section.id, section.section_name) for section in Section.query.all()]
 
@@ -169,7 +171,7 @@ def add_students():
                 flash(message, category='error')
 
             if not request.form['pin'].isnumeric():
-                message = "Pin should be in numbers (Max./Min. length: 6)/ No special characters/Alphabets allowed"
+                message = "Pin should be in numbers. No special characters/Alphabets allowed"
                 flash(message, category='error')
 
             if not request.form['roll_no'].isnumeric():
@@ -206,6 +208,7 @@ def add_students():
                 flash("User with same Email or Roll No. already exists", category='error')
                 return render_template(templates.add_student, form=form)
             else:
+
                 db.session.add(student)
                 db.session.commit()
                 flash(record_added, category='success')

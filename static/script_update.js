@@ -21,7 +21,6 @@ country_select.onchange = function () {
 
 state_select.onchange = function () {
     state = state_select.value;
-     console.log("state")
     fetch('/get_city_list/' + state).then(function (response) {
         response.json().then(function (data) {
             optionHTML = '<option value="">Select City</option>';
