@@ -213,7 +213,6 @@ def add_students():
                 db.session.commit()
                 flash(record_added, category='success')
                 return redirect(url_for('home'))
-
         return render_template(templates.add_student, form=form)
     return render_template(templates.login)
 
