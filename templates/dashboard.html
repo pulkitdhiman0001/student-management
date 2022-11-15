@@ -22,7 +22,7 @@
         <div class="d-block" style="position:fixed;top:10rem; left:4rem;">
             <div>
                 <a class="add_button"
-               style="text-decoration:none;color:green;font-size:17px;padding:7px;font-weight:bold"
+
                href="{{url_for('add_students')}}">Add <i class="fa fa-plus" aria-hidden="true"></i></a>
             </div>
 
@@ -50,8 +50,8 @@
         </div>
 
         <div style="height:400px;">
-            <table class="table table-hover" id="tb">
-                <thead style="position:sticky; top:0; background-color:white;">
+            <table class="table table-hover">
+                <thead style="position:sticky; top:0;">
                 <tr>
                     <th></th>
                     <th>Roll No.</th>
@@ -67,7 +67,7 @@
                 {% for student in students %}
                 <tr>
                     <td>
-                        <input class="form-check-input" name="check-box" type="checkbox" value="{{student.id}}">
+                        <input class="form-check-input" name="check-box" id="check" type="checkbox" value="{{student.id}}">
                     </td>
                     <td style="cursor: pointer;"
                         onclick="location.href='{{url_for('student_details', student_id = student.id)}}'">{{

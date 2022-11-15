@@ -1,5 +1,5 @@
 {% extends 'skel.html' %}
-
+{%block title%}Student Details{% endblock %}
 {% block content %}
 {%- for category, message in get_flashed_messages(with_categories = true) %}
 <ul>
@@ -11,6 +11,8 @@
 
 </ul>
 {%- endfor %}
+
+
 
 <div class="d-grid gap-2 col-5 mx-auto" style="margin-top:40px">
 
@@ -75,7 +77,7 @@
                 </div>
             </div>
 
-            <div class="row mb-3" style="background-color:lightcyan; border-radius:15px">
+            <div class="row mb-3" id="address">
                 <div class="row mb-3">
                     <div class="col">
 
@@ -129,7 +131,7 @@
             <div class="row mb-4">
                 <div class="col">
                     <label class="form-label">Email</label>
-                    <input type="email" class="form-control" name="email" value="{{user_to_update.email}}"
+                    <input type="text" class="form-control" name="email" value="{{user_to_update.email}}"
                            placeholder="Email" required>
                 </div>
                 <div class="col">

@@ -19,3 +19,4 @@ class HtmlTemplates:
     update_student = "update_student.html"
     update_user = "update_user.html"
     users = "users.html"
+    add_user = "add_user.html"

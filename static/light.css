@@ -1,0 +1,119 @@
+.bglight{
+    background-color:lightcyan;
+}
+
+
+#navbarNav ul li a{
+    font-size: 18px;
+}
+
+#navbarNav ul li a:hover{
+    color:cyan;
+    text-decoration: overline;
+    transition : 1s;
+
+}
+
+.navbar-brand{
+    font-size:30px;
+    margin-left:10px;
+}
+
+.navbar-brand:hover{
+    color:cyan;
+    transition : 1s;
+}
+.navbar-collapse{
+    margin-left:20px;
+}
+
+.dropdown-item:hover{
+    background-color:lightcyan;
+    cursor:pointer;
+    color:black;
+}
+
+#form-check input:checked ~ .checkmark {
+  background-color: green;
+}
+
+
+.logout:hover{
+    color:white !important;
+    background-color: red;
+}
+
+.add_button a:hover{
+    color:red; !important;
+}
+
+.del_button {
+    border: none;
+    background-color:white;
+    color: red;
+    font-size:17px;
+    font-weight:bold;
+}
+
+
+.del_button:focus {
+    border: none;
+    outline: none;
+}
+
+.update_button{
+    border: none;
+    background-color:white;
+    border: none;
+    outline: none;
+    font-size:17px;
+    font-weight:bold;
+}
+
+.update_button:focus{
+    outline:none !important;
+}
+
+.add_button{
+    text-decoration:none;color:green;font-size:17px;padding:7px;font-weight:bold
+}
+
+.scroll{
+    overflow:hidden;
+    height: 300px;
+}
+.scroll:hover{
+    overflow-y: scroll;
+    transition:overflow-y 2s;
+}
+
+
+ ::-webkit-scrollbar {
+    width: 8px;
+ }
+
+ ::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: cyan;
+}
+
+table tr:hover{
+    background-color:lightcyan;
+    color:black;
+}
+
+ul{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+#address{
+    background-color:lightcyan;
+    border-radius:15px
+}
+
+.form-check-input input[type=checkbox]:checked {
+color: red;
+}

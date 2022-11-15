@@ -1,12 +1,12 @@
 {%extends "skel.html"%}
-
+{%block title%}Users{% endblock %}
 {%block content%}
 {%- for category, message in get_flashed_messages(with_categories = true) %}
 <ul>
     {%if category== 'success'%}
-        <li class="p-1 mb-1 bg-success text-white">{{ message }}</li>
+    <li class="p-1 mb-1 bg-success text-white">{{ message }}</li>
     {%else%}
-        <li class="p-1 mb-1 bg-danger text-white">{{ message }}</li>
+    <li class="p-1 mb-1 bg-danger text-white">{{ message }}</li>
     {%endif%}
 
 </ul>
@@ -18,7 +18,12 @@
 <h2 style="text-align:center">Users List</h2>
 <br>
 
-<div style="width:500px; margin:auto" class="d-grid gap-2 col-6 mx-auto">
+<div style="margin:auto" class="d-grid gap-2 col-6 mx-auto w-25">
+    <div class="d-flex flex-row-reverse">
+        <a class="add_button"
+
+           href="{{url_for('add_user')}}">Add <i class="fa fa-plus" aria-hidden="true"></i></a>
+    </div>
     <div style="overflow-y:scroll; height:200px">
         <table class="table table-hover" id="tb">
             <thead>
@@ -47,7 +52,6 @@
             </tbody>
         </table>
     </div>
-
 
 
 </div>

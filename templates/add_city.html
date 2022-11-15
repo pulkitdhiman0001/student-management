@@ -1,6 +1,7 @@
 {% extends 'skel.html' %}
-
+{%block title%}Cities{% endblock %}
 {% block content %}
+
 {%- for category, message in get_flashed_messages(with_categories = true) %}
 <ul>
     {%if category== 'success'%}

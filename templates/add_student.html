@@ -1,5 +1,5 @@
 {% extends 'skel.html' %}
-
+{%block title%}Add Student{% endblock %}
 {% block content %}
 {%- for category, message in get_flashed_messages(with_categories = true) %}
 <ul>
@@ -55,7 +55,7 @@
             </div>
         </div>
 
-        <div class="row mb-4" style="background-color:lightcyan; border-radius:15px">
+        <div class="row mb-4" id="address">
             <div class="row mb-4">
                 <div class="col">
                     <label class="form-label">Street <span style="color:red">*</span></label>
@@ -110,7 +110,7 @@
             </div>
             <div class="col">
                 <label class="form-label">Email</label>
-                <input value="{{ request.form['email'] }}" type="email" class="form-control" name="email"
+                <input value="{{ request.form['email'] }}" type="text" class="form-control" name="email"
                        placeholder="@Email">
             </div>
         </div>

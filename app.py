@@ -47,6 +47,7 @@ def get_city_list(state_id):
 def login():
     if 'username' in session:
         return redirect(url_for('home'))
+
     if request.method == 'POST':
         username = request.form["username"]
         password = request.form["password"]
@@ -67,7 +68,9 @@ def register():
         userpass = request.form["password"]
         confirm_userpass = request.form["confirm_password"]
         hash_pass = generate_password_hash(userpass)
-
+        if not userpass or not request.form["password"]:
+            flash("All Fields are required", category='error')
+            return render_template('add_user.html')
         add_user = Users(username=request.form["username"], password=hash_pass)
 
         exists = db.session.query(db.exists().where(
@@ -98,6 +101,36 @@ def manage_users():
         users = Users.query.all()
         return render_template('users.html', users=users)
     return render_template(templates.login)
+
+
+
+@app.route('/add_user', methods=['GET', 'POST'])
+def add_user():
+    if request.method == 'POST':
+        userpass = request.form["password"]
+        confirm_userpass = request.form["confirm_password"]
+        hash_pass = generate_password_hash(userpass)
+
+        if not userpass or not request.form["password"]:
+            flash("All Fields are required", category='error')
+            return render_template('add_user.html')
+
+        add_user = Users(username=request.form["username"], password=hash_pass)
+
+        exists = db.session.query(db.exists().where(
+            Users.username == request.form["username"])).scalar()
+        if exists:
+            flash("User with same username already exists", category='error')
+            return render_template('add_user.html')
+        if userpass != confirm_userpass:
+            flash("Password does not match", category='error')
+            return render_template('add_user.html')
+        else:
+            db.session.add(add_user)
+            db.session.commit()
+            flash('User Created', category='success')
+            return redirect(url_for('manage_users'))
+    return render_template(templates.add_user)
 
 
 @app.route('/delete_user/<int:user_id>', methods=['GET', 'POST'])
@@ -625,8 +658,6 @@ def add_standard():
 
             if not request.form['standard_name']:
                 flash(required, category='error')
-
-
             else:
                 standard_to_be_added = Standard(standard_name=request.form['standard_name'])
                 db.session.add(standard_to_be_added)

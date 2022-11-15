@@ -1,5 +1,5 @@
 {%extends "skel.html"%}
-
+{%block title%}Cities{% endblock %}
 {%block content%}
 {%- for category, message in get_flashed_messages(with_categories = true) %}
 <ul>
@@ -54,10 +54,23 @@
             <form action="{{url_for('add_city')}}" method="POST">
 
                 <div class="d-grid gap-2 col-12 mx-auto">
+                    <div class="row">
+                        <div class="col">
+                            <input type="text" class="form-control" placeholder="City Name" name="name" required>
+                        </div>
 
-                    <input type="text" class="form-control" placeholder="City Name" name="name" required>
-                    {{form.country(class="form-select form-select-lg mb-3 bg-info text-light")}}
-                    {{form.state(class="form-select form-select-lg mb-3 bg-info text-light")}}
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            {{form.country(class="form-select form-select-lg mb-3 bg-info text-light")}}
+
+                        </div>
+                        <div class="col">
+                            {{form.state(class="form-select form-select-lg mb-3 bg-info text-light")}}
+                        </div>
+
+                    </div>
                 </div>
 
                 <div class="d-grid col-8 mx-auto">
@@ -70,7 +83,7 @@
 </div>
 
 {% block script %}
-<script src="{{url_for('static', filename='script.js')}}"></script>
+<script src="{{url_for('static', filename='script_update.js')}}"></script>
 {% endblock %}
 
 {%endblock%}

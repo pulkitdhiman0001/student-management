@@ -7,122 +7,21 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <link rel="stylesheet" href="/static/light.css">
+    <link rel="stylesheet" href="/static/dark.css">
+
+
     <title>{%block title%}{% endblock %}</title>
 
-    <style>
-
-
-        .dark-mode {
-          background-color: black;
-          color: white;
-
-        }
-        .table-dark table{
-            background-color:black:
-            color:white;
-          }
-
-        #navbarNav ul li a{
-            font-size: 18px;
-        }
-
-        #navbarNav ul li a:hover{
-            color:cyan;
-            text-decoration: overline;
-            transition : 1s;
-
-        }
-
-        .navbar-brand{
-            font-size:30px;
-            margin-left:10px;
-        }
-
-        .navbar-brand:hover{
-            color:cyan;
-            transition : 1s;
-        }
-
-
-        #form-check input:checked ~ .checkmark {
-          background-color: green;
-        }
-
-
-        .logout:hover{
-            color:white !important;
-            background-color: red;
-        }
-
-        .add_button a:hover{
-            color:red; !important;
-        }
-
-        .del_button {
-            border: none;
-            background-color:white;
-            color: red;
-            font-size:17px;
-            font-weight:bold;
-        }
-
-        .del_button:focus {
-            border: none;
-            outline: none;
-        }
-
-        .update_button{
-            border: none;
-            background-color:white;
-            border: none;
-            outline: none;
-            font-size:17px;
-            font-weight:bold;
-        }
-
-        .update_button:focus{
-            outline:none !important;
-        }
-
-       .scroll{
-            overflow:hidden;
-            height: 300px;
-       }
-       .scroll:hover{
-            overflow-y: scroll;
-            transition:overflow-y 2s;
-       }
-
-
- ::-webkit-scrollbar {
-    width: 8px;
- }
-
- ::-webkit-scrollbar-thumb {
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
-    background: cyan;
-}
-
-table tr:hover{
-    background-color:lightcyan;
-}
-
-ul{
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-
-    </style>
 </head>
 <body>
 
 
 <nav style="position:sticky; top:0; z-index:1;" class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a href="{{url_for('home')}}" class="navbar-brand"><img src="{{url_for('static', filename= 'sm2.png')}}" style="border-radius:10px"
-                                       height="90px" alt="no image" class="navbar-brand"> Student Management</a>
+    <a href="{{url_for('home')}}" class="navbar-brand"><img src="{{url_for('static', filename= 'sm2.png')}}"
+                                                            style="border-radius:10px"
+                                                            height="70px" alt="no image" class="navbar-brand"> Student
+        Management</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -143,16 +42,16 @@ ul{
             </li>
         </ul>
         <div class="dropdown show nav-item" style="margin-right: 80px">
-            <a class="btn btn-success dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+            <a class="btn btn-info dropdown-toggle" role="button" id="dropdownMenuLink"
                data-toggle="dropdown"
                aria-haspopup="true" aria-expanded="false">
                 {{session.username.capitalize()}}
             </a>
 
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" id="dropdown">
                 <a class="dropdown-item" href="{{url_for('manage_users')}}">Manage Users</a>
                 <a class="dropdown-item" href="{{url_for('standard_section')}}">Add Class/Section</a>
-                <a class="dropdown-item" id="dark" onclick="dark_mode()" href="#">Dark Mode</a>
+                <a class="dropdown-item" id="theme-toggle" >Dark Mode</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item logout" href="{{url_for('logout')}}">Logout</a>
             </div>
@@ -180,5 +79,6 @@ ul{
 
 <script src="{{url_for('static', filename='form_disable.js')}}"></script>
 <script src="{{url_for('static', filename='checkbox_del.js')}}"></script>
-<script src="{{url_for('static', filename='dark-mode.js')}}"></script>
+<script src="{{url_for('static', filename='dark_mode.js')}}"></script>
+
 </html>

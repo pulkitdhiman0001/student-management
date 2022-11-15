@@ -1,5 +1,5 @@
 {% extends 'skel.html' %}
-
+{%block title%}States{% endblock %}
 {% block content %}
 {%- for category, message in get_flashed_messages(with_categories = true) %}
 <ul>

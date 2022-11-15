@@ -27,16 +27,11 @@ $(".form-check-input").click(function(){
         if($(this).is(":checked")){
         class_id.push($(this).val());
         }
-
-
         });
         console.log(class_id);
         textbox2.value = class_id
 
     });
-
-
-
 
 
 $(document).ready(function() {

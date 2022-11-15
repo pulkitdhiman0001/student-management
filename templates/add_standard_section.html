@@ -1,5 +1,5 @@
 {% extends 'skel.html' %}
-
+{%block title%}Standard/Section{% endblock %}
 {% block content %}
 {%- for category, message in get_flashed_messages(with_categories = true) %}
 <span style="width:50px;">
