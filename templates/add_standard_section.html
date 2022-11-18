@@ -28,12 +28,36 @@
                 <tr>
                     <td>{{ standard.standard_name }}</td>
                     <td>
-                        <button type="button" class="btn btn-outline-danger"
-                                onclick="location.href='{{url_for('del_standard', standard_id = standard.id)}}'">Delete
+                        <button type="button" id="del_standard" class="btn btn-outline-danger" onclick="del_standard({{standard.id}})"
+                            data-toggle="modal" data-target=".bd-example-modal-sm">Delete
                         </button>
                         <button type="button" class="btn btn-outline-success"
                                 onclick="location.href='{{url_for('update_standard', standard_id = standard.id)}}'">Edit
                         </button>
+                    </td>
+
+                    <td>
+                        <div id="bd-example-modal-sm{{standard.id}}" class="modal fade bd-example-modal-sm"
+                             tabindex="-1" role="dialog"
+                             aria-labelledby="mySmallModalLabel"
+                             aria-hidden="true">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        Are You Sure ?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                                onclick="location.href='{{url_for('standard_section')}}'">Close
+                                        </button>
+                                        <a class="btn btn-danger" id="modal_del{{standard.id}}"
+                                           href="location.href='{{url_for('del_standard', standard_id = standard.id)}}'">
+                                            Delete
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 {% endfor %}
@@ -54,13 +78,36 @@
                 <tr>
                     <td>{{ section.section_name }}</td>
                     <td>
-                        <button type="button" class="btn btn-outline-danger"
-                                onclick="location.href='{{url_for('del_section', section_id = section.id)}}'">Delete
+                        <button type="button" id="del_section" class="btn btn-outline-danger" onclick="del_section({{section.id}})"
+                            data-toggle="modal" data-target=".bd-example-modal-sm">Delete
                         </button>
                         <button type="button" class="btn btn-outline-success"
                                 onclick="location.href='{{url_for('update_section', section_id = section.id)}}'">Edit
                         </button>
                     </td>
+
+                    <td>
+                    <div id="bd-example-modal-sm{{section.id}}" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog"
+                         aria-labelledby="mySmallModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    Are You Sure ?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                            onclick="location.href='{{url_for('standard_section')}}'">Close
+                                    </button>
+                                    <a class="btn btn-danger" id="section_del{{section.id}}"
+                                            href="location.href='{{url_for('del_section', section_id = section.id)}}'">
+                                        Delete
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
                 </tr>
                 {% endfor %}
                 </tbody>
@@ -100,7 +147,27 @@
     </div>
 </div>
 
+<script>
+<!--     $('#del').on('click', function() {-->
+<!--     -->
 
+
+<!-- });-->
+
+ function del_section(id){
+    $('#bd-example-modal-sm'+id).modal('show');
+    $('#section_del'+id).attr('href','')
+    $('#section_del'+id).attr('href','/del_section/'+id)
+ }
+
+
+
+ function del_standard(id){
+    $('#bd-example-modal-sm'+id).modal('show');
+    $('#modal_del'+id).attr('href','')
+    $('#modal_del'+id).attr('href','/del_standard/'+id)
+ }
+</script>
 <br>
 <br>
 {% include 'footer.html' %}

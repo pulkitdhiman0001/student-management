@@ -1,22 +1,21 @@
 {% extends 'skel.html' %}
 {%block title%}Add Student{% endblock %}
 {% block content %}
-{%- for category, message in get_flashed_messages(with_categories = true) %}
-<ul>
-    {%if category== 'success'%}
-    <li class="p-1 mb-1 bg-success text-white">{{ message }}</li>
-    {%else%}
-    <li class="p-1 mb-1 bg-danger text-white">{{ message }}</li>
-    {%endif%}
 
-</ul>
+{%- for category, message in get_flashed_messages(with_categories = true) %}
+
+{%if category== 'success'%}
+<h6 class="p-2 mb-1 bg-success text-white">{{ message }}</h6>
+{%else%}
+<h6 class="p-2 mb-1 bg-danger text-white">{{ message }}</h6>
+{%endif%}
+
+
 {%- endfor %}
 
-<br>
+<div class="d-grid gap-2 col-5 mx-auto" style="margin-top:30px">
 
-<div class="d-grid gap-2 col-5 mx-auto" style="margin-top:40px">
-
-    <form action="{{request.path}}" method="post">
+    <form action="{{request.path}}" method="post" id="submitData">
         {{ form.csrf_token}}
         <div class="row mb-4">
             <div class="col">
@@ -116,17 +115,22 @@
         </div>
         <br>
         <div class="d-grid gap-2 col-6 mx-auto">
-            <button type="submit" class="btn btn-outline-primary" data-toggle="modal"
-                    data-target=".bd-example-modal-lg">Add
+            <button type="submit" class="btn btn-outline-primary" data-toggle="modal" data-target=".bd-example-modal-sm"
+            >Add
                 Record
             </button>
+
         </div>
     </form>
 </div>
 
 
+
+
 {% block script %}
+
 <script src="{{url_for('static', filename='script_update.js')}}"></script>
+
 {% endblock %}
 <br>
 <br>

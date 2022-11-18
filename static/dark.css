@@ -192,3 +192,24 @@ body.dark .btn-outline-primary:hover{
     background-color: #4AA2FF;
     color:white;
 }
+
+body.dark input[type="password"]{
+    background-color: #353535;
+    color:white;
+ }
+
+ body.dark #manage_users_link{
+    color:cyan;
+ }
+
+ body.dark #add_user{
+    color: white;
+    background-color: #3378C1;
+
+ }
+
+ body.dark #add_user:hover{
+    color: white;
+    background-color: #138496;
+    border: 2px solid cyan;
+ }

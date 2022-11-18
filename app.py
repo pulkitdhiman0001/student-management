@@ -81,6 +81,11 @@ def register():
         if userpass != confirm_userpass:
             flash("Password does not match", category='error')
             return render_template('register.html')
+
+        pass_regex = '^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$'
+        if not re.fullmatch(pass_regex, userpass):
+            flash("Password must contain the following \n (Upper case and lower case letter, one special symbol, "
+                  "one number)", category='error')
         else:
             db.session.add(add_user)
             db.session.commit()
@@ -101,7 +106,6 @@ def manage_users():
         users = Users.query.all()
         return render_template('users.html', users=users)
     return render_template(templates.login)
-
 
 
 @app.route('/add_user', methods=['GET', 'POST'])
@@ -380,12 +384,17 @@ def add_country():
 @app.route('/del_country/<int:country_id>')
 def del_country(country_id):
     if 'username' in session:
+
         country_to_del = Country.query.filter_by(id=country_id).first()
-        if country_to_del:
+        if Student.query.filter_by(country_id=country_id).first():
+            flash("Country in use", category='error')
+
+        else:
             db.session.delete(country_to_del)
             db.session.commit()
             flash(record_deleted, category='success')
         return redirect(url_for('all_countries'))
+
     return render_template(templates.login)
 
 
@@ -403,7 +412,7 @@ def update_country(country_id):
                 country_to_update.name = request.form['name']
 
             if not request.form['name'].isalpha():
-                message = "State cannot contain numbers or any special characters"
+                message = "Country cannot contain numbers or any special characters"
                 flash(message, category='error')
             else:
                 country_to_update.name = request.form['name']
@@ -445,6 +454,7 @@ def add_state():
                 message = '''State cannot contain numbers 
                             or any special characters'''
                 flash(message, category='error')
+                return redirect(url_for('all_states'))
 
             else:
                 state_to_be_added = State(name=request.form['name'])
@@ -463,7 +473,10 @@ def add_state():
 def del_state(state_id):
     if 'username' in session:
         state_to_del = State.query.filter_by(id=state_id).first()
-        if state_to_del:
+        if Student.query.filter_by(state_id=state_id).first():
+            flash("State in use", category='error')
+
+        else:
             db.session.delete(state_to_del)
             db.session.commit()
             flash(record_deleted, category='success')
@@ -548,7 +561,10 @@ def add_city():
 def del_city(city_id):
     if 'username' in session:
         city_to_del = City.query.filter_by(id=city_id).first()
-        if city_to_del:
+        if Student.query.filter_by(city_id=city_id).first():
+            flash("City in use", category='error')
+            return redirect(url_for('all_cities'))
+        else:
             db.session.delete(city_to_del)
             db.session.commit()
             flash(record_deleted, category='success')

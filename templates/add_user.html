@@ -5,6 +5,8 @@
     <title>Add User</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="/static/light.css">
+    <link rel="stylesheet" href="/static/dark.css">
 </head>
 
 <body>
@@ -39,12 +41,16 @@
         <input type="password" class="form-control" placeholder="Confirm Password" name="confirm_password" required>
     </div>
     <div class="form-group d-grid gap-2 col-3 mx-auto">
-        <button type="submit" class="btn btn-primary gap-2 col-12">Add</button>
+        <button type="submit" class="btn btn-info gap-2 col-12" id="add_user">Add</button>
     </div>
     <hr class="w-25">
-    <div class="form-group d-grid gap-2 col-3 mx-auto">
-        <a href="{{url_for('manage_users')}}">Back to manage Users</a>
+    <div class="form-group d-grid gap-2 col-3 mx-auto" >
+        <a href="{{url_for('manage_users')}}" id="manage_users_link">Back to manage Users</a>
     </div>
 </form>
+
 </body>
+{% block script %}
+<script src="{{url_for('static', filename='dark_mode.js')}}"></script>
+{% endblock %}
 </html>

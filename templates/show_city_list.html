@@ -36,12 +36,35 @@
                 <td>{{ city.state.name }}</td>
                 <td>{{ city.country.name }}</td>
                 <td>
-                    <button type="button" class="btn btn-outline-danger"
-                            onclick="location.href='{{url_for('del_city', city_id = city.id)}}'">Delete
+                    <button type="button" id="del" class="btn btn-outline-danger" onclick="del({{city.id}})"
+                            data-toggle="modal" data-target=".bd-example-modal-sm">Delete
                     </button>
                     <button type="button" class="btn btn-outline-success"
                             onclick="location.href='{{url_for('update_city', city_id = city.id)}}'">Edit
                     </button>
+                </td>
+
+                <td>
+                    <div id="bd-example-modal-sm{{city.id}}" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog"
+                         aria-labelledby="mySmallModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    Are You Sure ?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                            onclick="location.href='{{url_for('all_cities')}}'">Close
+                                    </button>
+                                    <a class="btn btn-danger" id="modal_del{{city.id}}"
+                                            href="location.href='{{url_for('del_city', city_id = city.id)}}'">
+                                        Delete
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </td>
             </tr>
             {% endfor %}
@@ -84,6 +107,19 @@
 
 {% block script %}
 <script src="{{url_for('static', filename='script_update.js')}}"></script>
+<script>
+<!--     $('#del').on('click', function() {-->
+<!--     -->
+
+
+<!-- });-->
+
+ function del(id){
+    $('#bd-example-modal-sm'+id).modal('show');
+    $('#modal_del'+id).attr('href','')
+    $('#modal_del'+id).attr('href','/del_city/'+id)
+ }
+</script>
 {% endblock %}
 
 {%endblock%}

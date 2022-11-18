@@ -19,98 +19,131 @@
 <br>
 <div class="w-75" style="margin:auto;margin-bottom:200px">
 
-        <div class="d-block" style="position:fixed;top:10rem; left:4rem;">
-            <div>
-                <a class="add_button"
+    <div class="d-block" style="position:fixed;top:10rem; left:4rem;">
+        <div>
+            <a class="add_button"
 
                href="{{url_for('add_students')}}">Add <i class="fa fa-plus" aria-hidden="true"></i></a>
-            </div>
-
-            <div>
-                <form method="POST" action="/get_checked_boxes">
-
-                    <input type="text" id="stu_ids" name="stu_ids" hidden/>
-                    <button type="submit" class="del_button" id="stu_ids_submit">
-                        Del <i class="fa fa-minus" aria-hidden="true"></i>
-                    </button>
-
-            </form>
-            </div>
-           <div>
-                <form method="POST" action="/send_class_id">
-
-                    <input type="text" id="class_ids" name="class_ids" hidden/>
-                    <button type="submit" class="update_button" id="class_ids_submit">
-                        Update <i class="fa fa-arrow-up" aria-hidden="true"></i>
-                    </button>
-
-            </form>
-           </div>
-
         </div>
 
-        <div style="height:400px;">
-            <table class="table table-hover">
-                <thead style="position:sticky; top:0;">
-                <tr>
-                    <th></th>
-                    <th>Roll No.</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Class</th>
-                    <th>Section</th>
-                    <th>Email</th>
-                    <th>Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for student in students %}
-                <tr>
-                    <td>
-                        <input class="form-check-input" name="check-box" id="check" type="checkbox" value="{{student.id}}">
-                    </td>
-                    <td style="cursor: pointer;"
-                        onclick="location.href='{{url_for('student_details', student_id = student.id)}}'">{{
-                        student.roll_no }}
-                    </td>
-                    <td style="cursor: pointer;"
-                        onclick="location.href='{{url_for('student_details', student_id = student.id)}}'">{{
-                        student.fname }}
-                    </td>
-                    <td style="cursor: pointer;"
-                        onclick="location.href='{{url_for('student_details', student_id = student.id)}}'">{{
-                        student.lname }}
-                    </td>
-                    <td style="cursor: pointer;"
-                        onclick="location.href='{{url_for('student_details', student_id = student.id)}}'">{{
-                        student.standard.standard_name }}
-                    </td>
-                    <td style="cursor: pointer;"
-                        onclick="location.href='{{url_for('student_details', student_id = student.id)}}'">{{
-                        student.section.section_name }}
-                    </td>
+        <div>
+            <form method="POST" action="/get_checked_boxes">
 
-                    <td style="cursor: pointer;"
-                        onclick="location.href='{{url_for('student_details', student_id = student.id)}}'">{{
-                        student.email }}
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-outline-danger"
-                                onclick="location.href='{{url_for('del_student', student_id = student.id)}}'"
-                                data-toggle="modal" data-target=".bd-example-modal-lg">
-                            Delete
-                        </button>
-                    </td>
+                <input type="text" id="stu_ids" name="stu_ids" hidden/>
+                <button type="submit" class="del_button" id="stu_ids_submit">
+                    Del <i class="fa fa-minus" aria-hidden="true"></i>
+                </button>
 
-                </tr>
-
-                {% endfor %}
-                </tbody>
-            </table>
+            </form>
         </div>
+        <div>
+            <form method="POST" action="/send_class_id">
+
+                <input type="text" id="class_ids" name="class_ids" hidden/>
+                <button type="submit" class="update_button" id="class_ids_submit">
+                    Update <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                </button>
+
+            </form>
+        </div>
+
+    </div>
+
+    <div style="height:400px;">
+        <table class="table table-hover">
+            <thead style="position:sticky; top:0;">
+            <tr>
+                <th></th>
+                <th>Roll No.</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Class</th>
+                <th>Section</th>
+                <th>Email</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for student in students %}
+            <tr>
+                <td>
+                    <input class="form-check-input" name="check-box" id="check" type="checkbox" value="{{student.id}}">
+                </td>
+                <td style="cursor: pointer;"
+                    onclick="location.href='{{url_for('student_details', student_id = student.id)}}'">{{
+                    student.roll_no }}
+                </td>
+                <td style="cursor: pointer;"
+                    onclick="location.href='{{url_for('student_details', student_id = student.id)}}'">{{
+                    student.fname }}
+                </td>
+                <td style="cursor: pointer;"
+                    onclick="location.href='{{url_for('student_details', student_id = student.id)}}'">{{
+                    student.lname }}
+                </td>
+                <td style="cursor: pointer;"
+                    onclick="location.href='{{url_for('student_details', student_id = student.id)}}'">{{
+                    student.standard.standard_name }}
+                </td>
+                <td style="cursor: pointer;"
+                    onclick="location.href='{{url_for('student_details', student_id = student.id)}}'">{{
+                    student.section.section_name }}
+                </td>
+
+                <td style="cursor: pointer;"
+                    onclick="location.href='{{url_for('student_details', student_id = student.id)}}'">{{
+                    student.email }}
+                </td>
+                <td>
+                    <button type="button" id="del" class="btn btn-outline-danger" onclick="del({{student.id}})"
+                            data-toggle="modal" data-target=".bd-example-modal-sm">
+                        Delete
+                    </button>
+
+                </td>
+                <td>
+                    <div id="bd-example-modal-sm{{student.id}}" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog"
+                         aria-labelledby="mySmallModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    Are You Sure ?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                            onclick="location.href='{{url_for('home')}}'">Close
+                                    </button>
+                                    <a class="btn btn-danger" id="modal_del{{student.id}}"
+                                            href="location.href='{{url_for('del_student', student_id = student.id)}}'">
+                                        Delete
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
     <br>
 </div>
+<script>
+<!--     $('#del').on('click', function() {-->
+<!--     -->
 
+
+<!-- });-->
+
+ function del(id){
+    $('#bd-example-modal-sm'+id).modal('show');
+    $('#modal_del'+id).attr('href','')
+    $('#modal_del'+id).attr('href','/del_student/'+id)
+ }
+</script>
 
 {%endblock%}
 

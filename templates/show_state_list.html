@@ -41,14 +41,35 @@
 
 
                 <td>
-                    <button type="button" class="btn btn-outline-danger"
-                            onclick="location.href='{{url_for('del_state', state_id = state.id)}}'">Delete
+                    <button type="button" id="del" class="btn btn-outline-danger" onclick="del({{state.id}})"
+                            data-toggle="modal" data-target=".bd-example-modal-sm">Delete
                     </button>
                     <button type="button" class="btn btn-outline-success"
                             onclick="location.href='{{url_for('update_state', state_id = state.id)}}'">Edit
                     </button>
                 </td>
-
+                <td>
+                    <div id="bd-example-modal-sm{{state.id}}" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog"
+                         aria-labelledby="mySmallModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    Are You Sure ?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                            onclick="location.href='{{url_for('all_states')}}'">Close
+                                    </button>
+                                    <a class="btn btn-danger" id="modal_del{{state.id}}"
+                                            href="location.href='{{url_for('del_state', state_id = state.id)}}'">
+                                        Delete
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
             </tr>
 
 
@@ -78,5 +99,17 @@
     </div>
 
 </div>
+<script>
+<!--     $('#del').on('click', function() {-->
+<!--     -->
 
+
+<!-- });-->
+
+ function del(id){
+    $('#bd-example-modal-sm'+id).modal('show');
+    $('#modal_del'+id).attr('href','')
+    $('#modal_del'+id).attr('href','/del_state/'+id)
+ }
+</script>
 {%endblock%}
