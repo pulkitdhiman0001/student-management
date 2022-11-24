@@ -236,6 +236,30 @@ def add_students():
                 message = "Enter a Valid Email"
                 flash(message, category='error')
 
+            same_email = Student.query.filter(
+                Student.email == request.form["email"])
+
+            same_roll = Student.query.filter(
+                Student.roll_no == request.form["roll_no"]
+            )
+
+            for res in same_email:
+
+                if res.id == Student.id:
+                    continue
+                flash("User with same Email already exists", category='error')
+
+                return render_template(templates.add_student, form=form)
+
+            for res in same_roll:
+
+                if res.id == Student.id:
+                    continue
+
+                flash("User with same Roll No. already exists", category='error')
+
+                return render_template(templates.add_student, form=form)
+
             if message:
                 form.country.default = request.form["country"]
                 form.state.default = request.form["state"]
@@ -354,8 +378,6 @@ def student_details(student_id):
                 Student.section_id == user_to_update.section_id, Student.roll_no == user_to_update.roll_no
             )
 
-            for i in same_roll:
-                print(i.fname)
             for res in same_email:
 
                 if res.id == user_to_update.id:

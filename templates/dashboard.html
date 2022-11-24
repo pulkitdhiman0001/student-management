@@ -94,26 +94,27 @@
                 </td>
 
             </tr>
-            <div id="bd-example-modal-sm{{student.id}}" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog"
-                         aria-labelledby="mySmallModalLabel"
-                         aria-hidden="true">
-                        <div class="modal-dialog modal-sm">
-                            <div class="modal-content">
-                                <div class="modal-body">
-                                    Are You Sure ?
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary" data-dismiss="modal"
-                                            onclick="location.href='{{url_for('home')}}'">Close
-                                    </button>
-                                    <a class="btn btn-danger" id="modal_del{{student.id}}"
-                                            href="location.href='{{url_for('del_student', student_id = student.id)}}'">
-                                        Delete
-                                    </a>
-                                </div>
-                            </div>
+            <div id="bd-example-modal-sm{{student.id}}" class="modal fade bd-example-modal-sm" tabindex="-1"
+                 role="dialog"
+                 aria-labelledby="mySmallModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            Are You Sure ?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                    onclick="location.href='{{url_for('home')}}'">Close
+                            </button>
+                            <a class="btn btn-danger" id="modal_del{{student.id}}"
+                               href="location.href='{{url_for('del_student', student_id = student.id)}}'">
+                                Delete
+                            </a>
                         </div>
                     </div>
+                </div>
+            </div>
             {% endfor %}
             </tbody>
         </table>
@@ -126,6 +127,7 @@ function del(id){
     $('#modal_del'+id).attr('href','')
     $('#modal_del'+id).attr('href','/del_student/'+id)
  }
+
 </script>
 
 {%endblock%}
