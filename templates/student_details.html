@@ -1,18 +1,27 @@
 {% extends 'skel.html' %}
 {%block title%}Student Details{% endblock %}
 {% block content %}
-{%- for category, message in get_flashed_messages(with_categories = true) %}
-<ul>
-    {%if category== 'success'%}
-        <li class="p-1 mb-1 bg-success text-white">{{ message }}</li>
-    {%else%}
-        <li class="p-1 mb-1 bg-danger text-white">{{ message }}</li>
-    {%endif%}
 
-</ul>
-{%- endfor %}
+<div style="width:20%; position:fixed; top:10rem; margin-left: 10px">
+    {%- for category, message in get_flashed_messages(with_categories = true) %}
 
+    <ul>
+        {%if category== 'success'%}
+        <div class="success ">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            {{ message }}
+        </div>
+        {%else%}
+        <div class="error mb-1">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            {{ message }}
+        </div>
+        {%endif%}
 
+    </ul>
+
+    {%- endfor %}
+</div>
 
 <div class="d-grid gap-2 col-5 mx-auto" style="margin-top:40px">
 

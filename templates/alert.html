@@ -1,0 +1,18 @@
+{%- for category, message in get_flashed_messages(with_categories = true) %}
+
+    <ul>
+        {%if category== 'success'%}
+        <div class="success p-3">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            {{ message }}
+        </div>
+        {%else%}
+        <div class="error p-3">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            {{ message }}
+        </div>
+        {%endif%}
+
+    </ul>
+
+{%- endfor %}

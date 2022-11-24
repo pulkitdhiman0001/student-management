@@ -1,16 +1,7 @@
 {%extends "skel.html"%}
 {%block title%}Home{% endblock %}
 {%block content%}
-{%- for category, message in get_flashed_messages(with_categories = true) %}
-<ul>
-    {%if category== 'success'%}
-    <li class="p-1 mb-1 bg-success text-white">{{ message }}</li>
-    {%else%}
-    <li class="p-1 mb-1 bg-danger text-white">{{ message }}</li>
-    {%endif%}
-
-</ul>
-{%- endfor %}
+{% include 'alert.html' %}
 
 <br>
 
@@ -101,8 +92,9 @@
                     </button>
 
                 </td>
-                <td>
-                    <div id="bd-example-modal-sm{{student.id}}" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog"
+
+            </tr>
+            <div id="bd-example-modal-sm{{student.id}}" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog"
                          aria-labelledby="mySmallModalLabel"
                          aria-hidden="true">
                         <div class="modal-dialog modal-sm">
@@ -122,9 +114,6 @@
                             </div>
                         </div>
                     </div>
-                </td>
-            </tr>
-
             {% endfor %}
             </tbody>
         </table>
@@ -132,13 +121,7 @@
     <br>
 </div>
 <script>
-<!--     $('#del').on('click', function() {-->
-<!--     -->
-
-
-<!-- });-->
-
- function del(id){
+function del(id){
     $('#bd-example-modal-sm'+id).modal('show');
     $('#modal_del'+id).attr('href','')
     $('#modal_del'+id).attr('href','/del_student/'+id)

@@ -1,13 +1,12 @@
 import re
-from werkzeug.security import generate_password_hash, check_password_hash
-from flask import render_template, request, url_for, flash, redirect, jsonify, session
-from sqlalchemy import desc
-
 from datetime import timedelta
+
+from flask import render_template, request, url_for, flash, redirect, jsonify, session
+from sqlalchemy import desc, cast, Integer
+from werkzeug.security import generate_password_hash, check_password_hash
 
 from forms import Form
 from models import State, Student, City, Country, app, db, Users, Standard, Section
-
 from templates import HtmlTemplates
 
 templates = HtmlTemplates()
@@ -70,8 +69,8 @@ def register():
         hash_pass = generate_password_hash(userpass)
         if not userpass or not request.form["password"]:
             flash("All Fields are required", category='error')
-            return render_template('add_user.html')
-        add_user = Users(username=request.form["username"], password=hash_pass)
+            return render_template(templates.add_user)
+        add_new_user = Users(username=request.form["username"], password=hash_pass)
 
         exists = db.session.query(db.exists().where(
             Users.username == request.form["username"])).scalar()
@@ -87,7 +86,7 @@ def register():
             flash("Password must contain the following \n (Upper case and lower case letter, one special symbol, "
                   "one number)", category='error')
         else:
-            db.session.add(add_user)
+            db.session.add(add_new_user)
             db.session.commit()
             flash('User Created', category='success')
             return redirect(url_for('login'))
@@ -117,7 +116,7 @@ def add_user():
 
         if not userpass or not request.form["password"]:
             flash("All Fields are required", category='error')
-            return render_template('add_user.html')
+            return render_template(templates.add_user)
 
         add_user = Users(username=request.form["username"], password=hash_pass)
 
@@ -125,10 +124,10 @@ def add_user():
             Users.username == request.form["username"])).scalar()
         if exists:
             flash("User with same username already exists", category='error')
-            return render_template('add_user.html')
+            return render_template(templates.add_user)
         if userpass != confirm_userpass:
             flash("Password does not match", category='error')
-            return render_template('add_user.html')
+            return render_template(templates.add_user)
         else:
             db.session.add(add_user)
             db.session.commit()
@@ -200,12 +199,29 @@ def add_students():
 
             message = ""
 
-            if (request.form['fname'] or request.form["lname"] or request.form["mother_name"] or request.form[
-                "father_name"]).isnumeric():
-                message = '''Minimum name length should be 2 
-                            and cannot contain numbers 
-                            or any special characters'''
-                flash(message, category='error')
+            special_char = re.compile('[@_.,!#$%^&*()<>?/\|}{~:]')
+
+            for fname in request.form['fname']:
+                if fname.isdigit() or special_char.search(fname):
+                    message = "First Name cannot contain numbers or any special characters"
+                    flash(message, category='error')
+                    break
+
+            for lname in request.form['lname']:
+                if lname.isdigit() or special_char.search(lname):
+                    message = "Last Name cannot contain numbers or any special characters"
+                    flash(message, category='error')
+                    break
+            for mother_name in request.form['mother_name']:
+                if mother_name.isdigit() or special_char.search(mother_name):
+                    message = "Mother Name cannot contain numbers or any special characters"
+                    flash(message, category='error')
+                    break
+            for father_name in request.form['father_name']:
+                if father_name.isdigit() or special_char.search(father_name):
+                    message = "Father Name cannot contain numbers or any special characters"
+                    flash(message, category='error')
+                    break
 
             if not request.form['pin'].isnumeric():
                 message = "Pin should be in numbers. No special characters/Alphabets allowed"
@@ -282,11 +298,29 @@ def student_details(student_id):
         if request.method == "POST":
 
             message = ""
+            special_char = re.compile('[@_.,!#$%^&*()<>?/\|}{~:]')
 
-            if (request.form['fname'] or request.form['lname'] or request.form["father_name"] or request.form[
-                "mother_name"]).isnumeric():
-                message = "Name cannot contain numbers or any special characters"
-                flash(message, category='error')
+            for fname in request.form['fname']:
+                if fname.isdigit() or special_char.search(fname):
+                    message = "First Name cannot contain numbers or any special characters"
+                    flash(message, category='error')
+                    break
+
+            for lname in request.form['lname']:
+                if lname.isdigit() or special_char.search(lname):
+                    message = "Last Name cannot contain numbers or any special characters"
+                    flash(message, category='error')
+                    break
+            for mother_name in request.form['mother_name']:
+                if mother_name.isdigit() or special_char.search(mother_name):
+                    message = "Mother Name cannot contain numbers or any special characters"
+                    flash(message, category='error')
+                    break
+            for father_name in request.form['father_name']:
+                if father_name.isdigit() or special_char.search(father_name):
+                    message = "Father Name cannot contain numbers or any special characters"
+                    flash(message, category='error')
+                    break
             else:
                 user_to_update.fname = request.form['fname']
                 user_to_update.lname = request.form['lname']
@@ -312,13 +346,30 @@ def student_details(student_id):
                 message = "Enter a Valid Email"
                 flash(message, category='error')
 
-            search_res = Student.query.filter(
-                Student.email == user_to_update.email or Student.roll_no == user_to_update.roll_no)
-            for res in search_res:
+            same_email = Student.query.filter(
+                Student.email == user_to_update.email)
+
+            same_roll = Student.query.filter(
+                Student.id != user_to_update.id, Student.standard_id == user_to_update.standard_id,
+                Student.section_id == user_to_update.section_id, Student.roll_no == user_to_update.roll_no
+            )
+
+            for i in same_roll:
+                print(i.fname)
+            for res in same_email:
 
                 if res.id == user_to_update.id:
                     continue
-                flash("User with same Email or Roll No. already exists", category='error')
+                flash("User with same Email already exists", category='error')
+
+                return render_template(templates.student_details, user_to_update=user_to_update, form=form)
+
+            for res in same_roll:
+
+                if res.id == user_to_update.id:
+                    continue
+
+                flash("User with same Roll No. already exists", category='error')
 
                 return render_template(templates.student_details, user_to_update=user_to_update, form=form)
 
@@ -361,6 +412,13 @@ def all_countries():
 def add_country():
     if 'username' in session:
         if request.method == "POST":
+
+            exists = db.session.query(Country.id).filter_by(
+                name=request.form["name"].capitalize()).first() is not None
+
+            if exists:
+                flash("Country Already Exists", category='danger')
+                return redirect(url_for('all_countries'))
 
             if not request.form['name']:
                 flash(required, category='error')
@@ -447,6 +505,13 @@ def add_state():
     if 'username' in session:
         if request.method == "POST":
 
+            exists = db.session.query(State.id).filter_by(
+                name=request.form["name"].capitalize()).first() is not None
+
+            if exists:
+                flash("State Already Exists", category='danger')
+                return redirect(url_for('all_states'))
+
             if not request.form['name']:
                 flash(required, category='error')
 
@@ -468,7 +533,7 @@ def add_state():
     return render_template(templates.login)
 
 
-# del state
+# Delete state
 @app.route('/del_state/<int:state_id>')
 def del_state(state_id):
     if 'username' in session:
@@ -535,6 +600,13 @@ def add_city():
     if 'username' in session:
         if request.method == "POST":
 
+            exists = db.session.query(City.id).filter_by(
+                name=request.form["name"].capitalize()).first() is not None
+
+            if exists:
+                flash("City Already Exists", category='danger')
+                return redirect(url_for('all_cities'))
+
             if not request.form['name']:
                 flash(required, category='error')
 
@@ -584,6 +656,7 @@ def update_city(city_id):
         city_to_update = City.query.filter_by(id=city_id).first()
 
         if request.method == "POST":
+
             message = ""
             if request.form["name"].isnumeric():
                 message = "Numbers or special characters not allowed"
@@ -662,8 +735,10 @@ def update_class():
 @app.route('/standard_section', methods=['GET', 'POST'])
 def standard_section():
     if 'username' in session:
-        return render_template(templates.add_standard_section, standards=Standard.query.all(),
-                               sections=Section.query.all())
+        sections = Section.query.order_by(Section.section_name).all()
+        standards = Standard.query.order_by(cast(Standard.standard_name, Integer))
+        return render_template(templates.add_standard_section, standards=standards,
+                               sections=sections)
     return render_template(templates.login)
 
 
@@ -671,6 +746,18 @@ def standard_section():
 def add_standard():
     if 'username' in session:
         if request.method == "POST":
+
+            exists = db.session.query(Standard.id).filter_by(
+                standard_name=request.form["standard_name"]).first() is not None
+            if exists:
+                flash("Standard already exists", category='error')
+                return redirect(url_for('standard_section'))
+            if len(request.form["standard_name"]) > 12:
+                flash("Standard limit is 12", category='error')
+                return redirect(url_for('standard_section'))
+            if not request.form["standard_name"].isnumeric():
+                flash("Standard should be in numbers only", category='error')
+                return redirect(url_for('standard_section'))
 
             if not request.form['standard_name']:
                 flash(required, category='error')
@@ -688,6 +775,11 @@ def add_standard():
 def del_standard(standard_id):
     if 'username' in session:
         standard_to_del = Standard.query.filter_by(id=standard_id).first()
+
+        if Student.query.filter_by(standard_id=standard_id).first():
+            flash("Standard in use", category='error')
+            return redirect(url_for('standard_section'))
+
         if standard_to_del:
             db.session.delete(standard_to_del)
             db.session.commit()
@@ -713,12 +805,19 @@ def update_standard(standard_id):
 def add_section():
     if 'username' in session:
         if request.method == "POST":
-
-            if not request.form['section_name']:
-                flash(required, category='error')
-
+            exists = db.session.query(Section.id).filter_by(
+                section_name=request.form["section_name"].upper()).first() is not None
+            if exists:
+                flash("Section already exists", category='error')
+                return redirect(url_for('standard_section'))
+            if len(request.form["section_name"]) > 1:
+                flash("Section requires only one Alphabet", category='error')
+                return redirect(url_for('standard_section'))
+            if request.form['section_name'].isnumeric():
+                flash("Section should be in Alphabets only", category='error')
+                return redirect(url_for('standard_section'))
             else:
-                section_to_be_added = Section(section_name=request.form['section_name'])
+                section_to_be_added = Section(section_name=request.form['section_name'].upper())
                 db.session.add(section_to_be_added)
                 db.session.commit()
                 flash('New Section Added', category='success')
@@ -731,6 +830,11 @@ def add_section():
 def del_section(section_id):
     if 'username' in session:
         section_to_del = Section.query.filter_by(id=section_id).first()
+
+        if Student.query.filter_by(section_id=section_id).first():
+            flash("Section in use", category='error')
+            return redirect(url_for('standard_section'))
+
         if section_to_del:
             db.session.delete(section_to_del)
             db.session.commit()

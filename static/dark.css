@@ -25,11 +25,19 @@
 
 body.dark .add_button{
 
-    text-decoration:none;color:lightgreen;font-size:17px;padding:7px;font-weight:bold
+    text-decoration:none;
+    color:lightgreen;
+    font-size:17px;
+    padding:7px;
+    font-weight:bold
 }
 
 body.dark .add_button:hover{
-    text-decoration:none;color:green;font-size:17px;padding:7px;font-weight:bold
+    text-decoration:none;
+    color:green;
+    font-size:17px;
+    padding:7px;
+    font-weight:bold
 }
 
 
@@ -211,5 +219,21 @@ body.dark input[type="password"]{
  body.dark #add_user:hover{
     color: white;
     background-color: #138496;
-    border: 2px solid cyan;
+    border: 1px solid cyan;
  }
+
+body.dark .modal-content{
+    background-color: #353535;
+    color: white;
+}
+
+
+body.dark #update_button{
+    background-color: #1592ab;
+    color: white;
+}
+
+body.dark #update_button:hover{
+    background-color: #0dcaf0;;
+    color: white;
+}

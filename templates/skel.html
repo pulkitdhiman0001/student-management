@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/static/dark.css">
 
 
+
     <title>{%block title%}{% endblock %}</title>
 
 </head>
@@ -41,7 +42,7 @@
                 <a href="{{url_for('all_cities')}}" class="nav-link active">Cities</a>
             </li>
         </ul>
-        <div class="dropdown show nav-item" style="margin-right: 80px">
+        <div class="dropdown show nav-item" style="margin-right: 100px">
             <a class="btn btn-info dropdown-toggle" role="button" id="dropdownMenuLink"
                data-toggle="dropdown"
                aria-haspopup="true" aria-expanded="false">
@@ -50,7 +51,7 @@
 
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" id="dropdown">
                 <a class="dropdown-item" href="{{url_for('manage_users')}}">Manage Users</a>
-                <a class="dropdown-item" href="{{url_for('standard_section')}}">Add Class/Section</a>
+                <a class="dropdown-item" href="{{url_for('standard_section')}}">Manage Class/Section</a>
                 <a class="dropdown-item" id="theme-toggle" >Dark Mode</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item logout" href="{{url_for('logout')}}">Logout</a>

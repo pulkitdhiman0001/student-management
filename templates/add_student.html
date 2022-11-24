@@ -2,16 +2,26 @@
 {%block title%}Add Student{% endblock %}
 {% block content %}
 
-{%- for category, message in get_flashed_messages(with_categories = true) %}
+<div style="width:20%; position:fixed; top:10rem; margin-left: 10px">
+    {%- for category, message in get_flashed_messages(with_categories = true) %}
 
-{%if category== 'success'%}
-<h6 class="p-2 mb-1 bg-success text-white">{{ message }}</h6>
-{%else%}
-<h6 class="p-2 mb-1 bg-danger text-white">{{ message }}</h6>
-{%endif%}
+    <ul>
+        {%if category== 'success'%}
+        <div class="success ">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            {{ message }}
+        </div>
+        {%else%}
+        <div class="error mb-1">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            {{ message }}
+        </div>
+        {%endif%}
 
+    </ul>
 
-{%- endfor %}
+    {%- endfor %}
+</div>
 
 <div class="d-grid gap-2 col-5 mx-auto" style="margin-top:30px">
 
@@ -71,20 +81,20 @@
             <div class="col">
                 <label class="form-label">Country <span style="color:red">*</span></label>
 
-                {{form.country(class="form-select form-select-lg mb-3 bg-info text-light")}}
+                {{form.country(class="form-select form-select-lg mb-3 bg-info text-light location")}}
 
             </div>
 
             <div class="col">
                 <label class="form-label">State <span style="color:red">*</span></label>
 
-                {{form.state(class="form-select form-select-lg mb-3 bg-info text-light")}}
+                {{form.state(class="form-select form-select-lg mb-3 bg-info text-light location")}}
             </div>
 
             <div class="col">
                 <label class="form-label">City <span style="color:red">*</span></label>
 
-                {{form.city(class="form-select form-select-lg mb-3 bg-info text-light", value = request.form["city"])}}
+                {{form.city(class="form-select form-select-lg mb-3 bg-info text-light location" )}}
             </div>
 
         </div>
@@ -123,8 +133,6 @@
         </div>
     </form>
 </div>
-
-
 
 
 {% block script %}

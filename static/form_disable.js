@@ -1,4 +1,3 @@
-//remove disable form
 function hideDisable(){
 var inputs = document.getElementsByClassName('form_disabled');
 

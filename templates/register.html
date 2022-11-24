@@ -8,6 +8,10 @@
 
     <style>
 
+        #bg{
+              background-image : url({{url_for('static', filename= 'login-bg.jpg')}});
+              background-size: 120%;
+        }
 
         a{
             color:white;
@@ -19,25 +23,23 @@
             border:1px solid cyan;
         }
 
-
-
-
     </style>
 
 </head>
 
 <script>
-    window.onload = function zoomout() {
-           document.getElementById('bg').style.backgroundSize = "100%";
-           document.getElementById("bg").style.transition = "all 2s"
-           document.getElementById("bg").style.height = "100"
-        }
+window.onload = function zoomout() {
 
+       document.getElementById('bg').style.backgroundSize = "auto";
+       document.getElementById('bg').style.backgroundPosition = "center center";
+       document.getElementById('bg').style.backgroundRepeat = "no repeat";
+      document.getElementById("bg").style.transition = "all 2s"
+      }
 </script>
 
 
-<body id="bg" style="background-image : url({{url_for('static', filename= 'login-bg.jpg')}}); background-size: 120%; background-repeat:no-repeat">
-<div>
+<body id="bg">
+
     <div class="card mx-auto col-4 shadow-lg p-3 mb-5 rounded" style="top:5rem;background-color: #009bffa3">
         <form action="/register" method="post">
             <div class="form-group d-grid gap-2 col-12 mx-auto" style="margin-top:8%">
@@ -76,6 +78,6 @@
             </div>
         </form>
     </div>
-</div>
+
 </body>
 </html>
