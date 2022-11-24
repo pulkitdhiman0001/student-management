@@ -63,34 +63,37 @@ def login():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    if request.method == 'POST':
-        userpass = request.form["password"]
-        confirm_userpass = request.form["confirm_password"]
-        hash_pass = generate_password_hash(userpass)
-        if not userpass or not request.form["password"]:
-            flash("All Fields are required", category='error')
-            return render_template(templates.add_user)
-        add_new_user = Users(username=request.form["username"], password=hash_pass)
+    if 'username' in session:
+        if request.method == 'POST':
+            userpass = request.form["password"]
+            confirm_userpass = request.form["confirm_password"]
+            hash_pass = generate_password_hash(userpass)
+            if not userpass or not request.form["password"]:
+                flash("All Fields are required", category='error')
+                return render_template(templates.add_user)
+            add_new_user = Users(username=request.form["username"], password=hash_pass)
 
-        exists = db.session.query(db.exists().where(
-            Users.username == request.form["username"])).scalar()
-        if exists:
-            flash("User with same username already exists", category='error')
-            return render_template('register.html')
-        if userpass != confirm_userpass:
-            flash("Password does not match", category='error')
-            return render_template('register.html')
+            exists = db.session.query(db.exists().where(
+                Users.username == request.form["username"])).scalar()
+            if exists:
+                flash("User with same username already exists", category='error')
+                return render_template('register.html')
+            if userpass != confirm_userpass:
+                flash("Password does not match", category='error')
+                return render_template('register.html')
 
-        pass_regex = '^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$'
-        if not re.fullmatch(pass_regex, userpass):
-            flash("Password must contain the following \n (Upper case and lower case letter, one special symbol, "
-                  "one number)", category='error')
-        else:
-            db.session.add(add_new_user)
-            db.session.commit()
-            flash('User Created', category='success')
-            return redirect(url_for('login'))
-    return render_template(templates.register)
+            pass_regex = '^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$'
+            if not re.fullmatch(pass_regex, userpass):
+                flash("Password must contain the following \n (Upper case and lower case letter, one special symbol, "
+                      "one number)", category='error')
+            else:
+                db.session.add(add_new_user)
+                db.session.commit()
+                flash('User Created', category='success')
+                return redirect(url_for('login'))
+        return render_template(templates.register)
+    flash("Admin Credentials Required", category='error')
+    return render_template(templates.login)
 
 
 @app.route('/logout', methods=['GET', 'POST'])
